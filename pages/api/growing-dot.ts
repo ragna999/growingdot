@@ -21,7 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).send('Missing launcher_id')
   }
 
-  const entry = MINTED[launcher_id]
+  const entry = MINTED[launcher_id.trim().toLowerCase()]
+
   if (!entry) return res.status(404).send('Launcher ID not found in minted.json')
 
   const mintBlock = entry.mint_block
