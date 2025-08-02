@@ -1,0 +1,6 @@
+{
+    "name": "Growing Dot",
+    "description": "This dot grows with every block. After 100 blocks, it changes color.",
+    "image": "https://growingdots.vercel.app/api/growing-dot?launcher_id=placeholder"
+  }
+  

@@ -1,7 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+// Load API key from env
 const SPACESCAN_API_KEY = process.env.SPACESCAN_API_KEY || ''
-const MINTED = require('../../minted.json')
+
+// Import minted launcher IDs
+import mintedJson from '../../minted.json' assert { type: 'json' }
+
+type MintedType = {
+  [key: string]: {
+    mint_block: number
+  }
+}
+
+const MINTED: MintedType = mintedJson
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { launcher_id } = req.query
@@ -18,8 +29,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const response = await fetch('https://api2.spacescan.io/v0/mainnet/blockchain/stats', {
     headers: { 'x-api-key': SPACESCAN_API_KEY }
   })
-  const data = await response.json()
-  const currentBlock = data.height
+
+  const result = await response.json()
+  const currentBlock = result.height
 
   const dotCount = Math.max(0, currentBlock - mintBlock)
   const dotColor = dotCount >= 100 ? 'red' : 'black'
