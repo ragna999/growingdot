@@ -26,12 +26,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const mintBlock = entry.mint_block
 
-  const response = await fetch('https://api2.spacescan.io/v0/mainnet/blockchain/stats', {
-    headers: { 'x-api-key': SPACESCAN_API_KEY }
-  })
+  const response = await fetch('https://api.spacescan.io/block/peak', {
+  headers: { 'x-api-key': SPACESCAN_API_KEY }
+})
+const result = await response.json()
+const currentBlock = parseInt(result.data.number)
 
-  const result = await response.json()
-  const currentBlock = result.height
 
   const dotCount = Math.max(0, currentBlock - mintBlock)
   const dotColor = dotCount >= 100 ? 'red' : 'black'
